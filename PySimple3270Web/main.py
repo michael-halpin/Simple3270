@@ -9,6 +9,7 @@ config = {"server": "192.86.32.153", "port": 623, "lu": "", "useSsl": False, "fa
 fields = [{"Name": "Url", "X": 24, "Y": 5, "L": 31},
           {"Name": "Mainframe", "X": 21, "Y": 15, "L": 26},
           {"Name": "Text", "X": 16, "Y": 1, "L": 20}]
+field = [{"Name": "Text", "X": 1, "Y": 1, "L": 2000}]
 tso = [{"Name": "TSO", "X": 1, "Y": 24, "Value": "TSO"}]
 key = "Enter"
 wait1 = {"X": 10, "Y": 1, "Value": "IBM Z", "Timeout": 5000}
@@ -39,7 +40,7 @@ if not Emu.wait_for_text(session_id, wait2):
     raise Exception("Timed out while waiting to load.")
 
 # This line reads the data at the specified fields off the emulator screen.
-screen2 = Emu.read_screen(session_id, fields)
+screen2 = Emu.read_screen(session_id, field)
 
 
 # This line disconnects the emulator from the mainframe and disposes of the object.

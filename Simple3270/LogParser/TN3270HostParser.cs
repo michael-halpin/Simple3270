@@ -1,7 +1,7 @@
 ﻿#region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for Python and C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for Python and C#
  *
  * Copyright (c) 2004-2020 Michael Warriner
  * Modifications (c) as per Git change history
@@ -36,7 +36,7 @@ namespace Simple3270.TN3270
 		/// </summary>
 		public TN3270HostParser()
 		{
-			Simple3270.ConnectionConfig config = new ConnectionConfig();
+			ConnectionConfig config = new ConnectionConfig();
 			config.HostName = "DUMMY_PARSER";
 			TN3270API api = new TN3270API();
  

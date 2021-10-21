@@ -1,7 +1,7 @@
 ﻿#region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for Python and C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for Python and C#
  *
  * Copyright (c) 2004-2020 Michael Warriner
  * Modifications (c) as per Git change history
@@ -21,8 +21,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #endregion
-using Simple3270.TN3270;
+
 using System;
+using Simple3270.TN3270;
 
 namespace Simple3270
 {

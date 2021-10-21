@@ -1,7 +1,7 @@
 ﻿#region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for Python and C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for Python and C#
  *
  * Copyright (c) 2004-2020 Michael Warriner
  * Modifications (c) as per Git change history
@@ -3232,7 +3232,7 @@ namespace Simple3270.TN3270
 			{
 				this.telnet.Action.action_output("<Formatted>true</Formatted>");
 				ExtendedAttribute ea = new ExtendedAttribute();
-				// CFCJR Mar 4,2008 : user tmcquire in post on www.Simple3270.net
+				// CFCJR Mar 4,2008 : user tmcquire in post on www.Simple3270Web.net
 				// says this do loop can hang up (pos never changes) in certain cases.
 				// Added lastPos check to prevent this.
 				int lastPos = -1;

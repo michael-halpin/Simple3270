@@ -1,7 +1,7 @@
 #region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for C#
  *
  * Copyright (c) 2009-2021 Michael S. Halpin
  * Modifications (c) as per Git change history
@@ -30,10 +30,10 @@ namespace Simple3270.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WriteScreenController : ControllerBase
+    public class ReadEmulatorController : ControllerBase
     {
         [HttpPost]
-        public ActionResult<bool> Get(string sessionId, [FromBody] List<SimpleOutput> fields)
+        public ActionResult<List<SimpleOutput>> Get(string sessionId)
         {
             #region Data Validations
             if (!ModelState.IsValid)
@@ -44,21 +44,6 @@ namespace Simple3270.Controllers
             {
                 return BadRequest(nameof(sessionId));
             }
-            foreach (SimpleOutput field in fields)
-            {
-                if (string.IsNullOrEmpty(field.Name))
-                {
-                    return BadRequest(nameof(field.Name));
-                }
-                if (field.X < 1)
-                {
-                    return BadRequest(nameof(field.X));
-                }
-                if (field.Y < 1)
-                {
-                    return BadRequest(nameof(field.Y));
-                }
-            }
             #endregion
 
             int i = EstablishConnectionController.EmuIds.IndexOf(sessionId);
@@ -66,9 +51,10 @@ namespace Simple3270.Controllers
             {
                 return NotFound(nameof(sessionId));
             }
-            EstablishConnectionController.Emus[i].WriteScreen(fields);
+            var output = EstablishConnectionController.Emus[i].ReadEmulator();
             EstablishConnectionController.Timeout[i] = DateTime.UtcNow;
-            return true;
+            
+            return output;
         }
     }
 }

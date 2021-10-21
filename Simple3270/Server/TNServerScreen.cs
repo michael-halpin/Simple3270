@@ -1,7 +1,7 @@
 ﻿#region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for Python and C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for Python and C#
  *
  * Copyright (c) 2004-2020 Michael Warriner
  * Modifications (c) as per Git change history
@@ -23,6 +23,7 @@
 #endregion
 using System;
 using System.Collections;
+using Simple3270.TN3270;
 
 namespace Simple3270.TN3270Server
 {
@@ -187,7 +188,7 @@ namespace Simple3270.TN3270Server
 						case '~': to[toIndex++] = ATTR_HIDDEN; break;
 						case '^': to[toIndex++] = ATTR_PASSWORD; break;
 						default:
-							to[toIndex++] = Simple3270.TN3270.Tables.A2E[(byte)from[fromIndex]];
+							to[toIndex++] = Tables.A2E[(byte)from[fromIndex]];
 							break;
 					}
 				}
@@ -202,7 +203,7 @@ namespace Simple3270.TN3270Server
 						case '~': to[toIndex++] = ATTR_3270_HIDDEN; break;
 						case '^': to[toIndex++] = ATTR_3270_PASSWORD; break;
 						default:
-							to[toIndex++] = Simple3270.TN3270.Tables.A2E[(byte)from[fromIndex]];
+							to[toIndex++] = Tables.A2E[(byte)from[fromIndex]];
 							break;
 					}
 				}
@@ -264,7 +265,7 @@ namespace Simple3270.TN3270Server
 						to+=FlushBlanks(buffer,to,blankCount,currentOffset);
 						blankCount = 0;
 					}
-					buffer[to++] = Simple3270.TN3270.See.ORDER_SF;
+					buffer[to++] = See.ORDER_SF;
 					switch (mScreenBytes[from])
 					{
 						case ATTR_NORM:
@@ -314,9 +315,9 @@ namespace Simple3270.TN3270Server
 			//
 			if (fFormatted)
 			{
-				buffer[to++]=Simple3270.TN3270.See.ORDER_SBA;
+				buffer[to++]=See.ORDER_SBA;
 				to+=Create12BitAddress(buffer, to, currentCursorPosition);
-				buffer[to++]=Simple3270.TN3270.See.ORDER_IC;
+				buffer[to++]=See.ORDER_IC;
 			}
 			//
 			// End of buffer
@@ -346,7 +347,7 @@ namespace Simple3270.TN3270Server
 			}
 			else
 			{
-				data[to+offset] = Simple3270.TN3270.See.ORDER_RA;
+				data[to+offset] = See.ORDER_RA;
 				offset++;
 				offset += this.Create12BitAddress(data, to+offset, currentOffset);
 				data[to+offset] = 0x00;
@@ -631,7 +632,7 @@ namespace Simple3270.TN3270Server
 					break;
       
 			}  // end of switch
-			return (Simple3270.TN3270.Tables.A2E[AidKey]);
+			return (Tables.A2E[AidKey]);
 		}
 
 		//
@@ -789,7 +790,7 @@ namespace Simple3270.TN3270Server
 			string text = "";
 			for (i=position; i<end; i++)
 			{
-				text += System.Convert.ToChar(Simple3270.TN3270.Tables.E2A[mScreenBytes[i]]);
+				text += System.Convert.ToChar(Tables.E2A[mScreenBytes[i]]);
 
 			}
 			return text.TrimEnd();
@@ -813,7 +814,7 @@ namespace Simple3270.TN3270Server
 						ch = text[i-position];
 					else
 						ch = ' ';
-					byte b = Simple3270.TN3270.Tables.A2E[ch];
+					byte b = Tables.A2E[ch];
 					mScreenBytes[i] = b;
 				}
 			}

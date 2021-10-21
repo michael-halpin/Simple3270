@@ -1,7 +1,7 @@
 #region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for C#
  *
  * Copyright (c) 2009-2021 Michael S. Halpin
  * Modifications (c) as per Git change history
@@ -25,8 +25,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 using System.Drawing;
-using System.Net.Mime;
-using Newtonsoft.Json;
 using Simple3270.Models;
 
 namespace Simple3270
@@ -82,7 +80,7 @@ namespace Simple3270
 		/// </summary>
 		/// <param name="fields">The list of fields to gather.</param>
 		/// <returns>dynamic</returns>
-		public List<SimpleOutput> ReadScreen(IList<SimpleInput> fields)
+		public List<SimpleOutput> ReadScreen(List<SimpleInput> fields)
 		{
 			ReadScreenColors();
 			List<SimpleOutput> output = new List<SimpleOutput>();

@@ -1,7 +1,7 @@
 ﻿#region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for Python and C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for Python and C#
  *
  * Copyright (c) 2004-2020 Michael Warriner
  * Modifications (c) as per Git change history
@@ -40,7 +40,7 @@ namespace Simple3270.TN3270
 		//
 		[XmlIgnore()] public Guid ScreenGuid { get { return _ScreenGuid; }}
 		//
-		[System.Xml.Serialization.XmlElementAttribute("Field")]
+		[XmlElement("Field")]
 		public XMLScreenField[] Field;
 
 		public XMLScreenField[] Fields
@@ -48,7 +48,7 @@ namespace Simple3270.TN3270
 			get { return Field; }
 		}
 
-		[System.Xml.Serialization.XmlElementAttribute("Unformatted")]
+		[XmlElement("Unformatted")]
 		public XMLUnformattedScreen Unformatted;
 
 		public bool Formatted;
@@ -583,16 +583,16 @@ namespace Simple3270.TN3270
 	[Serializable]
 	public class XMLUnformattedScreen
 	{
-		[System.Xml.Serialization.XmlElementAttribute("Text")] public string[] Text;
+		[XmlElement("Text")] public string[] Text;
 	}
 		
 	[Serializable]
 	public  class XMLScreenField 
 	{
-		[System.Xml.Serialization.XmlElementAttribute("Location")]
+		[XmlElement("Location")]
 		public XMLScreenLocation Location;
 
-		[System.Xml.Serialization.XmlElementAttribute("Attributes")]
+		[XmlElement("Attributes")]
 		public XMLScreenAttributes Attributes;
 		
 		[System.Xml.Serialization.XmlText] public string Text;
@@ -600,19 +600,19 @@ namespace Simple3270.TN3270
 	[Serializable]
 	public  class XMLScreenLocation
 	{
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int position;
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int left;
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int top;
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int length;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int position;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int left;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int top;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int length;
 	}
 	[Serializable]
 	public  class XMLScreenAttributes
 	{
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int Base;
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public bool Protected;
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public string FieldType;
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public string Foreground;
-		[System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public string Background;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public int Base;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public bool Protected;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public string FieldType;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public string Foreground;
+		[XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] public string Background;
 	}
 
 	//

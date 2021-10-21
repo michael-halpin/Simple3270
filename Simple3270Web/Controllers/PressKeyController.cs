@@ -1,7 +1,7 @@
 #region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for C#
  *
  * Copyright (c) 2009-2021 Michael S. Halpin
  * Modifications (c) as per Git change history
@@ -22,19 +22,34 @@
  */
 #endregion
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Simple3270.Models;
 
 namespace Simple3270.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WaitForTextController : ControllerBase
+    public class PressKeyController : ControllerBase
     {
+        private static volatile List<string> _tnKeys = new 
+        (
+            new []
+            {
+                "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16",
+                "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24", "Tab", "BackTab", "Enter", "Backspace", "Clear",
+                "Delete", "DeleteField", "DeleteWord", "Left", "Left2", "Up", "Right", "Right2", "Down", "Attn",
+                "CircumNot", "CursorSelect", "Dup", "Erase", "EraseEOF", "EraseInput", "FieldEnd", "FieldMark",
+                "FieldExit", "Home", "Insert", "Interrupt", "Key", "Newline", "NextWord", "PAnn", "PreviousWord",
+                "Reset", "SysReq", "Toggle", "ToggleInsert", "ToggleReverse", "PA1", "PA2", "PA3", "PA4", "PA5", "PA6",
+                "PA7", "PA8", "PA9", "PA10", "PA11", "PA12"
+            }
+        );
+        
         [HttpPost]
-        public ActionResult<bool> Get(string sessionId, [FromBody] WaitForRequest field)
+        public ActionResult<bool> Get(string sessionId, [FromBody] string key)
         {
             #region Data Validations
+            key = key.Replace("\"", "");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -43,13 +58,13 @@ namespace Simple3270.Controllers
             {
                 return BadRequest(nameof(sessionId));
             }
-            if (field.X < 1)
+            if (string.IsNullOrEmpty(key))
             {
-                return BadRequest(nameof(field.X));
+                return BadRequest(nameof(key));
             }
-            if (field.Y < 1)
+            if (!_tnKeys.Contains(key))
             {
-                return BadRequest(nameof(field.Y));
+                return BadRequest(nameof(key));
             }
             #endregion
 
@@ -58,7 +73,7 @@ namespace Simple3270.Controllers
             {
                 return NotFound(nameof(sessionId));
             }
-            bool response = EstablishConnectionController.Emus[i].WaitFor(field);
+            bool response = EstablishConnectionController.Emus[i].PressKey(key);
             EstablishConnectionController.Timeout[i] = DateTime.UtcNow;
             return response;
         }

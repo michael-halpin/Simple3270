@@ -1,7 +1,7 @@
 ﻿#region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for C#
  *
  * Copyright (c) 2009-2021 Michael S. Halpin
  * Modifications (c) as per Git change history
@@ -33,7 +33,7 @@ namespace Simple3270.Controllers
     public class ReadScreenController : ControllerBase
     {
         [HttpPost]
-        public ActionResult<List<SimpleOutput>> Get(string sessionId, [FromBody] IList<SimpleInput> fields)
+        public ActionResult<List<SimpleOutput>> Get(string sessionId, [FromBody] List<SimpleInput> fields)
         {
             #region Data Validations
             if (!ModelState.IsValid)

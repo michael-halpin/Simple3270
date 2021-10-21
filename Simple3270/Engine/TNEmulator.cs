@@ -1,7 +1,7 @@
 ﻿#region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for Python and C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for Python and C#
  *
  * Copyright (c) 2004-2020 Michael Warriner
  * Modifications (c) as per Git change history
@@ -25,9 +25,9 @@ using System;
 using System.Drawing;
 using System.Threading;
 using System.Reflection;
-using Simple3270.TN3270;
-using Simple3270.Library;
 using System.Linq;
+using Simple3270.Library;
+using Simple3270.TN3270;
 
 namespace Simple3270
 {
@@ -646,7 +646,7 @@ namespace Simple3270
 				//
 				if (sout != null)
 				{
-					sout.WriteLine("Simple3270 emulator version " + Assembly.GetAssembly(typeof(Simple3270.TNEmulator)).GetName().Version+" (c) 2004-2017 Mike Warriner and many others");
+					sout.WriteLine("Simple3270Web emulator version " + Assembly.GetAssembly(typeof(TNEmulator)).GetName().Version+" (c) 2004-2017 Mike Warriner and many others");
 #if false
 					sout.WriteLine("(c) 2004-2006 Mike Warriner (mikewarriner@gmail.com). All rights reserved");
 					sout.WriteLine("");

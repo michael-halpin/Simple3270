@@ -1,7 +1,7 @@
 #region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for C#
  *
  * Copyright (c) 2009-2021 Michael S. Halpin
  * Modifications (c) as per Git change history
@@ -37,7 +37,7 @@ namespace Simple3270
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Simple3270", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Simple3270Web", Version = "v1"});
             });
         }
 
@@ -48,7 +48,7 @@ namespace Simple3270
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Simple3270 v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Simple3270Web v1"));
             }
 
             app.UseHttpsRedirection();

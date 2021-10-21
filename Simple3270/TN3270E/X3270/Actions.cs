@@ -1,7 +1,7 @@
 #region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for Python and C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for Python and C#
  *
  * Copyright (c) 2004-2020 Michael Warriner
  * Modifications (c) as per Git change history
@@ -227,7 +227,7 @@ namespace Simple3270.TN3270
 			// Check that we're connected
 			if (!telnet.IsConnected)
 			{
-				throw new Simple3270.TNHostException("TN3270 Host is not connected", telnet.DisconnectReason, null);
+				throw new TNHostException("TN3270 Host is not connected", telnet.DisconnectReason, null);
 			}
 
 			datacapture = null;

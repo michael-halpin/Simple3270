@@ -1,0 +1,16 @@
+{
+  "tn3270":
+  [
+    {
+      "server": "192.86.32.153",
+      "port": 623,
+      "use_ssl": false,
+      "lu": null,
+      "debug": false,
+      "terminal_type": "IBM-3278-2-E",
+      "fast_screen_mode": true,
+      "action_timeout": 1000,
+      "color_depth": 2
+    }
+  ]
+}

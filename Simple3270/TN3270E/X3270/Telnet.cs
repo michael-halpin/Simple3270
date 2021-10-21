@@ -1,7 +1,7 @@
 #region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for Python and C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for Python and C#
  *
  * Copyright (c) 2004-2020 Michael Warriner
  * Modifications (c) as per Git change history
@@ -30,9 +30,9 @@ using System.IO;
 using System.Threading;
 using System.Security.Cryptography.X509Certificates;
 using System.Linq;
-using Simple3270.Library;
 using System.Net.Security;
 using System.Collections.Generic;
+using Simple3270.Library;
 
 namespace Simple3270.TN3270
 {
@@ -1361,7 +1361,7 @@ namespace Simple3270.TN3270
 									{
 										Host_Disconnect(true);
 										Disconnect();
-										this.disconnectReason = "Simple3270.LogfileProcessorThreadHandler telnet_fsm error : disconnected";
+										this.disconnectReason = "Simple3270Web.LogfileProcessorThreadHandler telnet_fsm error : disconnected";
 										return;
 									}
 

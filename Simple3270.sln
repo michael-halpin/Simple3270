@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple3270", "Simple3270\Simple3270.csproj", "{54C70F2C-C469-4AF5-9A73-4F94CBDCAA38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple3270Web", "Simple3270Web\Simple3270Web.csproj", "{54C70F2C-C469-4AF5-9A73-4F94CBDCAA38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple3270", "Simple3270\Simple3270.csproj", "{AF6EA8EE-32DA-4594-B36E-4F670B477E7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple3270Console", "Simple3270Console\Simple3270Console.csproj", "{0C3C367B-23C0-4100-ABAC-2267BD8282BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{54C70F2C-C469-4AF5-9A73-4F94CBDCAA38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54C70F2C-C469-4AF5-9A73-4F94CBDCAA38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54C70F2C-C469-4AF5-9A73-4F94CBDCAA38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF6EA8EE-32DA-4594-B36E-4F670B477E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF6EA8EE-32DA-4594-B36E-4F670B477E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF6EA8EE-32DA-4594-B36E-4F670B477E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF6EA8EE-32DA-4594-B36E-4F670B477E7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C3C367B-23C0-4100-ABAC-2267BD8282BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C3C367B-23C0-4100-ABAC-2267BD8282BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C3C367B-23C0-4100-ABAC-2267BD8282BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C3C367B-23C0-4100-ABAC-2267BD8282BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

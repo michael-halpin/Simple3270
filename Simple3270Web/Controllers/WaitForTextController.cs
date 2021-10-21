@@ -1,7 +1,7 @@
 #region License
 /* 
  *
- * Simple3270 - A simple implementation of the TN3270/TN3270E protocol for C#
+ * Simple3270Web - A simple implementation of the TN3270/TN3270E protocol for C#
  *
  * Copyright (c) 2009-2021 Michael S. Halpin
  * Modifications (c) as per Git change history
@@ -22,7 +22,6 @@
  */
 #endregion
 using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Simple3270.Models;
 
@@ -30,10 +29,10 @@ namespace Simple3270.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ReadEmulatorController : ControllerBase
+    public class WaitForTextController : ControllerBase
     {
         [HttpPost]
-        public ActionResult<List<SimpleOutput>> Get(string sessionId)
+        public ActionResult<bool> Get(string sessionId, [FromBody] WaitForRequest field)
         {
             #region Data Validations
             if (!ModelState.IsValid)
@@ -44,6 +43,14 @@ namespace Simple3270.Controllers
             {
                 return BadRequest(nameof(sessionId));
             }
+            if (field.X < 1)
+            {
+                return BadRequest(nameof(field.X));
+            }
+            if (field.Y < 1)
+            {
+                return BadRequest(nameof(field.Y));
+            }
             #endregion
 
             int i = EstablishConnectionController.EmuIds.IndexOf(sessionId);
@@ -51,10 +58,9 @@ namespace Simple3270.Controllers
             {
                 return NotFound(nameof(sessionId));
             }
-            var output = EstablishConnectionController.Emus[i].ReadEmulator();
+            bool response = EstablishConnectionController.Emus[i].WaitFor(field);
             EstablishConnectionController.Timeout[i] = DateTime.UtcNow;
-            
-            return output;
+            return response;
         }
     }
 }

@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 using System.Drawing;
+using System.Net.Mime;
 using Newtonsoft.Json;
 using Simple3270.Models;
 
@@ -62,8 +63,8 @@ namespace Simple3270
 			//Write();
 			ReadAllText();
 			Point pt = _emulator.GetDimensions();
-			_maxRow = pt.X;
-			_maxCol = pt.Y;
+			_maxRow = pt.Y;
+			_maxCol = pt.X;
 			_foreColors = new ConsoleColor[_maxCol, _maxRow];
 		}
 		/// <summary>
@@ -77,34 +78,48 @@ namespace Simple3270
 
 		#region PUBLIC CAST TO CLASS METHODS
 		/// <summary>
-		/// Reads the fore colors for each field in the specified list.
-		/// </summary>
-		/// <typeparam name="T">The class to cast the data into.</typeparam>
-		/// <param name="fields">The list of fields to get the colors of.</param>
-		/// <returns>T</returns>
-		public T ReadScreenColors<T>(List<SimpleInput> fields)
-		{
-			string json = JsonConvert.SerializeObject(fields);
-			string output = ReadScreenColors(json);
-			T obj = JsonConvert.DeserializeObject<T>(output);
-			return obj;
-		}
-		/// <summary>
 		/// Reads the values for all fields in the specified list.
 		/// </summary>
 		/// <param name="fields">The list of fields to gather.</param>
 		/// <returns>dynamic</returns>
 		public List<SimpleOutput> ReadScreen(IList<SimpleInput> fields)
 		{
+			ReadScreenColors();
 			List<SimpleOutput> output = new List<SimpleOutput>();
 			for (int i = 0; i < fields.Count; i++)
 			{
 				int x = fields[i].X;
 				int y = fields[i].Y;
-				//ConsoleColor c = GetForeColor(x, y);
+				ConsoleColor clr = GetForeColor(x, y);
 				string text = ReadField(fields[i]);
-				output.Add(new SimpleOutput(fields[i].Name, x, y, text));
+				output.Add(new SimpleOutput(fields[i].Name, x, y, text, clr));
 			}
+			return output;
+		}
+
+		/// <summary>
+		/// Returns the layout of the screen in json serializable format.
+		/// </summary>
+		/// <returns>List<SimpleOutput></returns>
+		public List<SimpleOutput> ReadEmulator()
+		{
+			List<SimpleOutput> output = new List<SimpleOutput>();
+			
+			for (int i = 0; i < _emulator.CurrentScreenXML.Fields.Length; i++)
+			{
+				if (_emulator.CurrentScreenXML.Fields[i].Text == null)
+				{
+					continue;
+				}
+				SimpleOutput so = new SimpleOutput();
+				so.Name = "Field" + i;
+				so.Value = _emulator.CurrentScreenXML.Fields[i].Text;
+				so.X = _emulator.CurrentScreenXML.Fields[i].Location.left;
+				so.Y = _emulator.CurrentScreenXML.Fields[i].Location.top;
+				so.Color = GetFieldColor(i).ToString();
+				output.Add(so);
+			}
+
 			return output;
 		}
 		/// <summary>
@@ -136,6 +151,7 @@ namespace Simple3270
 				{
 					return false;
 				}
+
 				string text = ReadField(new SimpleInput(field));
 				if (field.Value == text)
 				{
@@ -149,11 +165,22 @@ namespace Simple3270
 		/// </summary>
 		/// <param name="json">The json field map to use.</param>
 		/// <returns>json</returns>
-		private string ReadScreenColors(string json)
+		private void ReadScreenColors()
 		{
-			List<SimpleInput> fields = JsonConvert.DeserializeObject<List<SimpleInput>>(json);
-			string output = ReadScreenColors(fields);
-			return output;
+			ClearForeColors();
+			#region Go field by field and write each field on the screen with the assigned color.
+			for (int i = 0; i < _emulator.CurrentScreenXML.Fields.Length; i++)
+			{
+				if (_emulator.CurrentScreenXML.Fields[i].Text != null)
+				{
+					int x = _emulator.CurrentScreenXML.Fields[i].Location.left;
+					int y = _emulator.CurrentScreenXML.Fields[i].Location.top;
+					int l = _emulator.CurrentScreenXML.Fields[i].Location.length;
+					ConsoleColor clr = GetFieldColor(i);
+					SetForeColor(x, y, l, clr);
+				}
+			}
+			#endregion
 		}
 		/// <summary>
 		/// Presses the key specified in the json map.
@@ -185,24 +212,11 @@ namespace Simple3270
 		#endregion
 
 		#region PRIVATE METHODS
-		private string ReadScreenColors(List<SimpleInput> fields)
-		{
-			string output = "{";
-			for (int i = 0; i < fields.Count; i++)
-			{
-				int x = fields[i].X;
-				int y = fields[i].Y;
-				ConsoleColor c = GetForeColor(x, y);
-				string js = "\"" + fields[i].Name + "\":\"" + c.ToString() + "\"";
-				output += js + ",";
-			}
-			output = output.Substring(0, output.Length - 1) + "}";
-			return output;
-		}
 		private string ReadField(SimpleInput field)
 		{
 			string text = _emulator.GetText(field.X - 1, field.Y - 1, field.L);
-			return text.Trim();
+			return text;
+			
 		}
 		private void Write()
 		{
@@ -343,7 +357,7 @@ namespace Simple3270
 		}
 		private void SetForeColor(int x, int y, int l, ConsoleColor c)
 		{
-			int end = x + l;
+			int end = x + l - 1;
 			for (int z = x; z < end; z++)
 				_foreColors[z, y] = c;
 		}

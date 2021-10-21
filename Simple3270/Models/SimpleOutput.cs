@@ -21,6 +21,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #endregion
+
+using System;
+
 namespace Simple3270.Models
 {
     /// <summary>
@@ -35,13 +38,15 @@ namespace Simple3270.Models
         // ReSharper disable once PropertyCanBeMadeInitOnly.Global
         public int Y { get; set; }
         public string Value { get; set; }
+        public string Color { get; set; }
 
-        public SimpleOutput(string name = "", int x = 0, int y = 0, string value = "")
+        public SimpleOutput(string name = "", int x = 0, int y = 0, string value = "", ConsoleColor color = ConsoleColor.Green)
         {
             Name = name;
             X = x;
             Y = y;
             Value = value;
+            Color = color.ToString();
         }
     }
 }

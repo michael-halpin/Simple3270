@@ -32,7 +32,6 @@ namespace Simple3270.Models
         public int X { get; set; }
         public int Y { get; set; }
         public int L { get; set; }
-        public ConsoleColor Color { get; set; }
         public SimpleInput(string name, int x, int y, int l)
         {
             Name = name;

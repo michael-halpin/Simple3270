@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "LeHzdsciuOD+GHMJFfc5EJhstcn2dBkrCJQAHJQrxmgMi9eaI7tK9+++bQlqHgfWcyrfAjISxPnHZ0QdDuknKQ==",
+  "dgSpecHash": "DFuV6OLl41IrES4k2DbnXa8AK0EuOE4oleyyyQO+fzU1iOaQPXA31lU4weMIWWTu28cjIAQWv0cO9x4XSGX+Hw==",
   "success": true,
-  "projectFilePath": "/home/michaelhalpin/RiderProjects/Simple3270/Simple3270Console/Simple3270Console.csproj",
+  "projectFilePath": "C:\\Users\\Michael\\RiderProjects\\Simple3270\\Simple3270Console\\Simple3270Console.csproj",
   "expectedPackageFiles": [
-    "/home/michaelhalpin/.nuget/packages/microsoft.netcore.platforms/5.0.0/microsoft.netcore.platforms.5.0.0.nupkg.sha512",
-    "/home/michaelhalpin/.nuget/packages/microsoft.win32.systemevents/5.0.0/microsoft.win32.systemevents.5.0.0.nupkg.sha512",
-    "/home/michaelhalpin/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
-    "/home/michaelhalpin/.nuget/packages/system.drawing.common/5.0.0/system.drawing.common.5.0.0.nupkg.sha512",
-    "/home/michaelhalpin/.nuget/packages/system.security.accesscontrol/5.0.0/system.security.accesscontrol.5.0.0.nupkg.sha512",
-    "/home/michaelhalpin/.nuget/packages/system.security.permissions/5.0.0/system.security.permissions.5.0.0.nupkg.sha512",
-    "/home/michaelhalpin/.nuget/packages/system.security.principal.windows/5.0.0/system.security.principal.windows.5.0.0.nupkg.sha512",
-    "/home/michaelhalpin/.nuget/packages/system.windows.extensions/5.0.0/system.windows.extensions.5.0.0.nupkg.sha512"
+    "C:\\Users\\Michael\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Michael\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\Michael\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Michael\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
+    "C:\\Users\\Michael\\.nuget\\packages\\system.security.accesscontrol\\5.0.0\\system.security.accesscontrol.5.0.0.nupkg.sha512",
+    "C:\\Users\\Michael\\.nuget\\packages\\system.security.permissions\\5.0.0\\system.security.permissions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Michael\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
+    "C:\\Users\\Michael\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

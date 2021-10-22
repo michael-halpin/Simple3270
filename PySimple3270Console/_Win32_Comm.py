@@ -28,13 +28,12 @@ import time
 import win32file
 import win32pipe
 import _Steganography
-import _Comm_Convergence as cc
 # endregion
 
 
 # region USE NAMED PIPES FOR WINDOWS CROSS PLATFORM COMMUNICATION
-import Screen
-import _Platform_Convergence
+#import Screen
+#import _Platform_Convergence
 
 
 class Pipe:
@@ -48,7 +47,7 @@ class Pipe:
         """
         count = 0
         outpipe = win32pipe.CreateNamedPipe(
-            r'\\.\pipe\Simple' + channel,
+            r'\\.\pipe\Simple3270_C2S_' + channel,
             win32pipe.PIPE_ACCESS_DUPLEX,
             win32pipe.PIPE_TYPE_MESSAGE | win32pipe.PIPE_READMODE_MESSAGE | win32pipe.PIPE_WAIT,
             1, 65536, 65536,
@@ -78,7 +77,7 @@ class Pipe:
         while not quit:
             try:
                 handle = win32file.CreateFile(
-                    r'\\.\pipe\Simple' + channel,
+                    r'\\.\pipe\Simple3270_S2C_' + channel,
                     win32file.GENERIC_READ,
                     0,
                     None,
@@ -97,7 +96,7 @@ class Pipe:
                         if rl == 1002:
                             rsp += response[1].decode('utf-8')[0:1000]
                         else:
-                            if not str.startswith("#END_OF_FILE"):
+                            if not str(rsp).startswith("#END_OF_FILE"):
                                 rsp += response[1].decode('utf-8')
                             else:
                                 break
@@ -130,8 +129,8 @@ class Pipe:
         :param verbose_level: The level of information to print to console. (0=None,1=Basic Info,2=Advanced Info)
         :return: void
         """
-        if verbose_level > 0:
-            cc.log_header("Using Win32 Pipe Protocol")
+        #if verbose_level > 0:
+            #cc.log_header("Using Win32 Pipe Protocol")
 
         while True:
             try:
@@ -143,7 +142,7 @@ class Pipe:
                 wr = json.loads(jsn)
                 # endregion
 
-                reply = cc.run_method(verbose_level, wr, jsn, key, iv)
+                reply = '' # cc.run_method(verbose_level, wr, jsn, key, iv)
 
                 if '"length":' in reply:
                     Pipe.set('Rpa_' + output, reply)
@@ -157,12 +156,11 @@ class Pipe:
                 return {"response": "EXCEPTION", "content": str(e_type) + ": " + str(e_value)}
 
     @staticmethod
-    def query(jsn, c2s, s2c, key, iv):
+    def query(jsn, session, key, iv):
         """
         Queries the server.
         :param jsn: The kind of query to perform..
-        :param c2s: The client to server channel.
-        :param s2c: The server to client channel.
+        :param session: The session id we are working with.
         :param key: The encryption key.
         :param iv: The encryption initialization vector.
         :param tween: How you would like to tween the mouse.
@@ -170,12 +168,16 @@ class Pipe:
         :param use_widget: If true displays the field highlighting widget during operation.
         :return: void
         """
-        Pipe.set(c2s, jsn)
-        packet = json.loads(Pipe.get(s2c))
+        Pipe.set(session, jsn)
+        text = Pipe.get(session)
+        packet = json.loads(text)
         if packet['response'] == 'EXCEPTION':
             raise Exception(packet['content'].ToString())
         encrypted = packet["content"]
-        content = _Steganography.decrypt(encrypted, key, iv)
-        rsp = json.loads(content)
+        if encrypted is not None:
+            content = _Steganography.decrypt(encrypted, key, iv)
+            rsp = json.loads(content)
+        else:
+            rsp = True
         return rsp
     # endregion

@@ -133,6 +133,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
           "System.Security.Permissions": "5.0.0"
         },
         "compile": {
@@ -429,19 +430,19 @@
     ]
   },
   "packageFolders": {
-    "/home/michaelhalpin/.nuget/packages/": {}
+    "C:\\Users\\Michael\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/michaelhalpin/RiderProjects/Simple3270/Simple3270Console/Simple3270Console.csproj",
+      "projectUniqueName": "C:\\Users\\Michael\\RiderProjects\\Simple3270\\Simple3270Console\\Simple3270Console.csproj",
       "projectName": "Simple3270Console",
-      "projectPath": "/home/michaelhalpin/RiderProjects/Simple3270/Simple3270Console/Simple3270Console.csproj",
-      "packagesPath": "/home/michaelhalpin/.nuget/packages/",
-      "outputPath": "/home/michaelhalpin/RiderProjects/Simple3270/Simple3270Console/obj/",
+      "projectPath": "C:\\Users\\Michael\\RiderProjects\\Simple3270\\Simple3270Console\\Simple3270Console.csproj",
+      "packagesPath": "C:\\Users\\Michael\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Michael\\RiderProjects\\Simple3270\\Simple3270Console\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/michaelhalpin/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Michael\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -453,8 +454,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "/home/michaelhalpin/RiderProjects/Simple3270/Simple3270/Simple3270.csproj": {
-              "projectPath": "/home/michaelhalpin/RiderProjects/Simple3270/Simple3270/Simple3270.csproj"
+            "C:\\Users\\Michael\\RiderProjects\\Simple3270\\Simple3270\\Simple3270.csproj": {
+              "projectPath": "C:\\Users\\Michael\\RiderProjects\\Simple3270\\Simple3270\\Simple3270.csproj"
             }
           }
         }
@@ -489,7 +490,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

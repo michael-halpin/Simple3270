@@ -105,6 +105,7 @@ namespace Simple3270Console
             {
                 writer.WriteLine(message);
                 writer.Flush();
+                writer.DisposeAsync();
             }
             else
             {
@@ -116,7 +117,7 @@ namespace Simple3270Console
                 }
                 messages.Add(message);
 
-                if (messages[message.Length - 1].Length == 1000)
+                if (messages[messages.Count - 1].Length == 1000)
                     messages.Add("#END_OF_FILE");
 
                 for (int i = 0; i < messages.Count; i++)

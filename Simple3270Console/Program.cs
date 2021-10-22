@@ -13,7 +13,8 @@ namespace Simple3270Console
         static void Main(string[] args)
         {
             #region Load the json config file.
-            string json = File.ReadAllText("Simple3270.json");
+            string dir = AppDomain.CurrentDomain.BaseDirectory;
+            string json = File.ReadAllText(dir + "\\Simple3270.json");
             dynamic config = JsonConvert.DeserializeObject(json);
             #endregion
 
@@ -37,6 +38,7 @@ namespace Simple3270Console
             cfg.Debug = config["tn3270"][i]["debug"];
             cfg.ColorDepth = config["tn3270"][i]["color_depth"];
             cfg.ActionTimeout = config["tn3270"][i]["action_timeout"];
+            cfg.DrawScreen = config["tn3270"][i]["draw_screen"];
             
             //int verbose_level = config["verbose_level"];
             #endregion
@@ -110,11 +112,12 @@ namespace Simple3270Console
                 try
                 {
                     #region Listen for next request from the client.
-                    string text = Win32Comm.Get("Simple3270_In_" + session).Trim();
+                    string text = Win32Comm.Get("Simple3270_C2S_" + session).Trim();
                     dynamic obj = JsonConvert.DeserializeObject(text);
-                    string method = obj["method"];
-                    string txt = obj["content"];
-                    string wr = Steganography.Decrypt(txt, key, iv);
+                    string pkg = obj["package"];
+                    string mth = obj["method"];
+                    string req = Steganography.Decrypt(pkg, key, iv);
+                    string method = Steganography.Decrypt(mth, key, iv);
                     string reply = string.Empty;
                     #endregion
 
@@ -123,23 +126,35 @@ namespace Simple3270Console
                     {
                         switch (method)
                         {
-                            case "read_screen_text":
-                                //reply = emu.ReadScreen(wr);
+                            case "read_screen":
+                                List<SimpleInput> sil = JsonConvert.DeserializeObject<List<SimpleInput>>(req);
+                                List<SimpleOutput> resp = emu.ReadScreen(sil);
+                                reply = JsonConvert.SerializeObject(resp);
                                 break;
-                            case "read_screen_colors":
-                                //reply = emu.ReadScreenColors(wr);
-                                break;
-                            case "write_screen_text":
-                                //reply = emu.WriteScreenText(wr);
+                            case "write_screen":
+                                List<SimpleOutput> sol = JsonConvert.DeserializeObject<List<SimpleOutput>>(req);
+                                emu.WriteScreen(sol);
+                                reply = null;
                                 break;
                             case "press_key":
-                                //reply = emu.PressKey(wr);
+                                dynamic jsn = JsonConvert.DeserializeObject(req);
+                                string btn = jsn["key"];
+                                emu.PressKey(btn);
+                                reply = null;
                                 break;
                             case "wait_for_text":
-                                //reply = emu.WaitForText(wr);
+                                WaitForRequest wfr = JsonConvert.DeserializeObject<WaitForRequest>(req);
+                                if (emu.WaitFor(wfr))
+                                {
+                                    reply = null;
+                                }
+                                else
+                                {
+                                    reply = "{'response':'EXCEPTION','content':'Wait for text timed out.'}".ToJson();
+                                }
                                 break;
-                            case "dispose_and_shutdown":
-                                if (wr == "{\"content\":\"close_session\"}")
+                            case "disconnect_session":
+                                if (req == "{\"content\":\"disconnect_session\"}")
                                 {
                                     emu.Dispose();
                                     return;
@@ -153,20 +168,29 @@ namespace Simple3270Console
                     }
                    #endregion
 
-                #region Send the response back to the client.
-                if (reply.Contains("\"length\""))
+                    #region Send the response back to the client.
+                    if (reply == null)
+                    {
+                        string resp = ("{'response':'SUCCESS','content':null}").ToJson();
+                        Win32Comm.Set(resp, "Simple3270_S2C_" + session);
+                    }
+                    else if (reply.Contains("\"response\":\"EXCEPTION\""))
+                    {
+                        Win32Comm.Set(reply, "Simple3270_S2C_" + session);
+                    }
+                    else if (reply.Contains("\"length\""))
                     {   // Handles sending binary files.
-                        Win32Comm.Set(reply, "Simple3270_Out_" + session);
+                        Win32Comm.Set(reply, "Simple3270_S2C_" + session);
                     }
                     else
                     {   // Handles sending text data.
                         string resp = ("{'response':'SUCCESS','content':'" + Steganography.Encrypt(reply, key, iv) + "'}").ToJson();
-                        Win32Comm.Set(resp, "Simple3270_Out_" + session);
+                        Win32Comm.Set(resp, "Simple3270_S2C_" + session);
                     }
                 }
                 catch (Exception e)
                 {   // Handles sending response if exception is thrown.
-                    Win32Comm.Set("{'response':'EXCEPTION','content':'" + e.Message + "'}", "Simple3270_Out_" + session);
+                    Win32Comm.Set("{'response':'EXCEPTION','content':'" + e.Message + "'}", "Simple3270_S2C_" + session);
                 }
                 #endregion
             }

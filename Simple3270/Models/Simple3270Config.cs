@@ -37,9 +37,11 @@ namespace Simple3270.Models
         public bool Debug { get; set; }
         public int ActionTimeout { get; set; }
         public int ColorDepth { get; set; }
+        public bool DrawScreen { get; set; }
 
         public Simple3270Config(string server, int port, bool useSsl = true, string lu = null, bool debug = false,
-            string terminalType = "IBM-3278-2-E", bool fastScreenMode = true, int actionTimeout = 1000, int colorDepth = 2)
+            string terminalType = "IBM-3278-2-E", bool fastScreenMode = true, int actionTimeout = 1000, 
+            int colorDepth = 2, bool drawScreen = true)
         {
             Server = server;
             Port = port;
@@ -50,6 +52,7 @@ namespace Simple3270.Models
             FastScreenMode = fastScreenMode;
             ActionTimeout = actionTimeout;
             ColorDepth = colorDepth;
+            DrawScreen = drawScreen;
         }
     }
 }

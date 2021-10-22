@@ -10,7 +10,8 @@
       "terminal_type": "IBM-3278-2-E",
       "fast_screen_mode": true,
       "action_timeout": 1000,
-      "color_depth": 2
+      "color_depth": 2,
+      "draw_screen": true
     }
   ]
 }

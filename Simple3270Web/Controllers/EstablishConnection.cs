@@ -62,7 +62,8 @@ namespace Simple3270.Controllers
                 return BadRequest(config.Port);
             }
             #endregion
-            
+
+            config.DrawScreen = false;  // No need to ever draw screen on server side.
             string sessionId = GetSession();
             Emus.Add(new Simple3270Api(config));
             EmuIds.Add(sessionId);

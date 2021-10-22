@@ -100,7 +100,9 @@ class Emulator:
         self.session = session
         self.key = _rand(32, 2)
         self.iv = _rand(16, 2)
-        os.system("start " + exe + " " + session + " " + self.key + " " + self.iv + " " + config)
+        self.key = "99999999999999999999999999999999"
+        self.iv = "0000000000000000"
+        #os.system("start " + exe + " " + session + " " + self.key + " " + self.iv + " " + config)
         # Launch app here.
 
     def read_screen(self, session_id, fields):

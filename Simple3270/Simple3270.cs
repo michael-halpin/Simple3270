@@ -58,12 +58,13 @@ namespace Simple3270
 			_emulator.Config.UseSSL = config.UseSsl;
 			_emulator.Connect(config.Server, config.Port, config.Lu);
 			ClearForeColors();
-			//Write();
+			Write();
 			ReadAllText();
 			Point pt = _emulator.GetDimensions();
 			_maxRow = pt.Y;
 			_maxCol = pt.X;
 			_foreColors = new ConsoleColor[_maxCol, _maxRow];
+			_verbose = config.DrawScreen;
 		}
 		/// <summary>
 		/// Releases resources and disposes this object.
@@ -226,6 +227,35 @@ namespace Simple3270
 				int c = Console.CursorLeft;
 				try
 				{
+					Console.Clear();
+					List<SimpleOutput> fields = ReadEmulator();
+					
+					string[] rows = ReadScreenByRows();
+					for (int y = 0; y < rows.Length; y++)
+					{
+						// Skip blank lines.
+						if (!string.IsNullOrEmpty(rows[y].Trim()))
+						{
+							string text = rows[y].Trim();
+							int l = rows[y].IndexOf(text, StringComparison.Ordinal);
+							Console.SetCursorPosition(l, y);
+							Console.ForegroundColor = ConsoleColor.DarkGreen;
+							Console.Write(text);
+						}
+					}
+					
+					
+					for (int i = 0; i < fields.Count; i++)
+					{
+						ConsoleColor clr = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), fields[i].Color, true);
+						Console.CursorLeft = fields[i].X;
+						Console.CursorTop = fields[i].Y;
+						Console.ForegroundColor = clr;
+						Console.Write(fields[i].Value);
+					}
+
+					string z = _emulator.CurrentScreenXML.Name;
+					/*
 					// Get screen in the form of an array of rows.
 					string[] rows = ReadScreenByRows();
 					Console.Clear(); // Clear console before rewriting the screen.
@@ -263,6 +293,7 @@ namespace Simple3270
 						}
 					}
 					#endregion
+					*/
 				}
 				catch (Exception)
 				{

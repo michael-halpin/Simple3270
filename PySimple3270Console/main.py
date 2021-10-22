@@ -3,6 +3,8 @@ from PySimple3270 import TnKey
 
 #TODO Need to draw the screen on the emulator.
 #TODO Write documentation.
+#TODO Sync up hidden characters with fields in ReadEmulator
+#TODO Clean up white space around fields in ReadEmulator
 
 #region Set object used to read and write from the mainframe.  These can alternatively be loaded from json text files.
 fields = [{"Name": "Url", "X": 24, "Y": 5, "L": 31},
